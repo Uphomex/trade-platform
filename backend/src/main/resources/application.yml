@@ -1,0 +1,68 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: trade-platform
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/trade_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: trade
+    password: trade123
+  sql:
+    init:
+      mode: never
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 0
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: org.apache.ibatis.type.EnumTypeHandler
+
+# RocketMQ（本地先 docker-compose 启动 namesrv + broker）
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: trade-producer-group
+    send-message-timeout: 3000
+
+# Seata AT（TC 默认 8091）
+seata:
+  enabled: true
+  application-id: trade-platform
+  tx-service-group: trade_tx_group
+  service:
+    vgroup-mapping:
+      trade_tx_group: default
+    grouplist:
+      default: 127.0.0.1:8091
+  registry:
+    type: file
+  config:
+    type: file
+  data-source-proxy-mode: AT
+
+trade:
+  payment:
+    callback-secret: dev-secret-change-me
+  order:
+    pending-pay-timeout-minutes: 15
+    timeout-scan-ms: 60000
+  cache:
+    order-detail-ttl-seconds: 60
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    com.example.trade: INFO
+    io.seata: WARN
+    org.apache.rocketmq: WARN

@@ -1,0 +1,29 @@
+# Java / Maven
+**/target/
+*.class
+*.jar
+*.war
+*.log
+
+# Node / Vue
+**/node_modules/
+**/dist/
+.npm
+npm-debug.log*
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
+
+# Seata / RocketMQ local files (if any)
+sessionStore/

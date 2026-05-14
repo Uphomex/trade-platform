@@ -1,0 +1,4 @@
+# 关闭 Seata（仅本地排障）。启动示例：
+# mvn spring-boot:run -Dspring-boot.run.profiles=no-seata
+seata:
+  enabled: false
