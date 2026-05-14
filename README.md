@@ -37,8 +37,10 @@ mvn spring-boot:run
 若暂未启动 Seata TC，可使用（关闭 Seata 与 MQ 消费者相关能力会受限，仅建议排障）：
 
 ```powershell
-mvn spring-boot:run -Dspring-boot.run.arguments="--seata.enabled=false"
+mvn spring-boot:run -Dspring-boot.run.profiles=no-seata
 ```
+
+（`application-no-seata.yml` 中 `seata.enabled=false`。若 RocketMQ 仍未就绪，请先 `docker compose up -d`。）
 
 （如仍因 RocketMQ 连接失败，请先确保 `docker compose` 已启动 NameServer/Broker。）
 
